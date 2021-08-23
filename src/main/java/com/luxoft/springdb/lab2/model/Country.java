@@ -1,80 +1,66 @@
 package com.luxoft.springdb.lab2.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.io.Serializable;
 
+@Getter
+@Setter
+@Entity
+@Table(name = "COUNTRY")
 public class Country implements Serializable {
+    private static final long serialVersionUID = 88005553535L;
 
-	private static final long serialVersionUID = 1L;
+    @Id
+    @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+    @Column(name = "NAME")
+    private String name;
+    @Column(name = "CODE_NAME")
+    private String codeName;
 
-	private int id;
+    public Country() {
+    }
 
-	private String name;
+    public Country(int id, String name, String codeName) {
+        this.id = id;
+        this.name = name;
+        this.codeName = codeName;
+    }
 
-	private String codeName;
+    public Country(String name, String codeName) {
+        this.name = name;
+        this.codeName = codeName;
+    }
 
-	public Country() {
-	}
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
-	public Country(int id, String name, String codeName) {
-		this.id = id;
-		this.name = name;
-		this.codeName = codeName;
-	}
+        Country country = (Country) o;
 
-	public Country(String name, String codeName) {
-		this.name = name;
-		this.codeName = codeName;
-	}
+        if (codeName != null ? !codeName.equals(country.codeName) : country.codeName != null)
+            return false;
+        if (name != null ? !name.equals(country.name) : country.name != null)
+            return false;
 
-	public int getId() {
-		return id;
-	}
+        return true;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int hashCode() {
+        int result = 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (codeName != null ? codeName.hashCode() : 0);
+        return result;
+    }
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getCodeName() {
-		return codeName;
-	}
-
-	public void setCodeName(String codeName) {
-		this.codeName = codeName;
-	}
-
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-
-		Country country = (Country) o;
-
-		if (codeName != null ? !codeName.equals(country.codeName) : country.codeName != null)
-			return false;
-		if (name != null ? !name.equals(country.name) : country.name != null)
-			return false;
-
-		return true;
-	}
-
-	public int hashCode() {
-		int result = 0;
-		result = 31 * result + (name != null ? name.hashCode() : 0);
-		result = 31 * result + (codeName != null ? codeName.hashCode() : 0);
-		return result;
-	}
-
-	@Override
-	public String toString() {
-		return "Country [id=" + id + ", name=" + name + ", codeName=" + codeName + "]";
-	}
+    @Override
+    public String toString() {
+        return "Country [id=" + id + ", name=" + name + ", codeName=" + codeName + "]";
+    }
 }
